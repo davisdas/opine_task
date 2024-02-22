@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:opine_task/controller/cart_controller.dart';
 import 'package:opine_task/controller/meals_controller.dart';
 import 'package:opine_task/utils/constants/color_constants.dart';
+import 'package:opine_task/view/cart/cart.dart';
 import 'package:provider/provider.dart';
 
 class Meals extends StatefulWidget {
@@ -42,6 +44,18 @@ class _MealsState extends State<Meals> {
           '${widget.categoryName} items',
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
+        actions: [
+          // cart
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Cart(),
+                    ));
+              },
+              icon: Icon(Icons.shopping_bag_outlined))
+        ],
       ),
       body: provider.isLoading == true
           ?
@@ -101,7 +115,38 @@ class _MealsState extends State<Meals> {
                                                   .toString()),
                                               fit: BoxFit.contain)),
                                     )
-                                  : SizedBox()
+                                  : SizedBox(),
+                              // add to cart
+                              GestureDetector(
+                                onTap: () {
+                                  Provider.of<CartController>(context,
+                                          listen: false)
+                                      .addToCart(
+                                          provider.mealData!.meals![index]);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Cart(),
+                                      ));
+                                },
+                                child: Card(
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        color: ColorConstants.primary,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Center(
+                                      child: Text(
+                                        'Add to cart',
+                                        style: TextStyle(
+                                            color: ColorConstants.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
                             ]),
                       ),
                     ),

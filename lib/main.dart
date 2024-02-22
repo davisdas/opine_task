@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:opine_task/controller/cart_controller.dart';
 import 'package:opine_task/controller/category_controller.dart';
 import 'package:opine_task/controller/meals_controller.dart';
 import 'package:opine_task/view/categories/categories.dart';
@@ -18,7 +19,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => CategoryController(),
         ),
-        ChangeNotifierProvider(create: (context) => MealsController(),)
+        ChangeNotifierProvider(
+          create: (context) => MealsController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CartController(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
